@@ -25,3 +25,63 @@ The application can be used for daily work and task management. It provides a se
 ## Unique Value
 
 The unique value of this application lies in its ability to integrate task management with schedule tracking in a single platform. This integration allows users to have a comprehensive overview of their tasks and deadlines, thereby enhancing their productivity and work efficiency.
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/CS-411-To-Do-Calendar/cs411-to-do-calendar.git
+```
+
+Go to the project directory
+
+```bash
+  cd cs411-to-do-calendar
+```
+
+Install dependencies
+
+```bash
+  npm install {the-dependencies}
+```
+
+Start the server !defaulted to local:3000
+
+```bash
+  npm start
+```
+
+
+## API Reference (Not complete yet)
+
+#### Get all items
+
+```http
+  GET /api/items
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `api_key` | `string` | **Required**. Your API key |
+
+#### Get item
+
+```http
+  GET /api/items/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of item to fetch |
+
+#### add(num1, num2)
+
+Takes two numbers and returns the sum.
+
+
+## Authors
+
+- [@octokatherine](https://www.github.com/octokatherine)
+
