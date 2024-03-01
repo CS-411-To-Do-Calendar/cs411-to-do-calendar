@@ -44,7 +44,7 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  npm install {the-dependencies}
+  npm install
 ```
 
 Start the server !defaulted to local:3000

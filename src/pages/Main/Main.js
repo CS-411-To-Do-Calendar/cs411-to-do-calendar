@@ -3,7 +3,7 @@ import './Main.css'
 
 function Main() {
   return (
-    <div>This is main page</div>
+    <div>This is main page hehe</div>
   )
 }
 
