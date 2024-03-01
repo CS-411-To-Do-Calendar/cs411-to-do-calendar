@@ -1,70 +1,27 @@
-# Getting Started with Create React App
+# To-Do List Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
 
-## Available Scripts
+This application is designed to consolidate your to-do list and schedule into a single, easy-to-use platform. It aims to help users manage their work deadlines and track their progress efficiently.
 
-In the project directory, you can run:
+## Problem Statement
 
-### `npm start`
+In our fast-paced world, keeping track of tasks and deadlines can be overwhelming. This application addresses this issue by providing a centralized platform for managing tasks and schedules.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Integration with Google Calendar**: This application is designed to sync with Google Calendar, allowing users to have their tasks and deadlines in one place.
+- **Automatic Meeting Addition**: The application can automatically add Google Meet or Zoom meetings to your calendar, ensuring you never miss a meeting.
+- **Task-Deadline Connection**: The application links your to-do list with its respective deadlines in the calendar, providing a visual representation of your tasks and when they are due.
 
-### `npm test`
+## Target Audience
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This application is for anyone looking to increase their work efficiency. It is particularly useful for individuals of all ages, college students, and office workers who juggle multiple tasks and deadlines.
 
-### `npm run build`
+## Usage
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The application can be used for daily work and task management. It provides a seamless connection between your to-do list and its respective deadlines in the calendar.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Unique Value
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The unique value of this application lies in its ability to integrate task management with schedule tracking in a single platform. This integration allows users to have a comprehensive overview of their tasks and deadlines, thereby enhancing their productivity and work efficiency.
