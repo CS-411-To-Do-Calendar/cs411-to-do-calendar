@@ -1,0 +1,17 @@
+----- Idea 1 - To Do Calendar ------
+  This app would be used to accumulate a to-do list schedule and help users to overlook
+  work deadlines and progress. Our target audience for such an app would be college students and
+  office workers, or just about anyone who needs to organize many tasks and thus increase their work
+  efficiency. This could be used for daily work, creating a connection between items to complete
+  and their deadlines on a calnedar in a more efficient way than google calendar alone. We would
+  want to connect this app to Google Calendar, but we want to create a more efficient way of
+  adding events to the calendar. With this app we could create a calendar block. When this is created,
+  we will ask if there is a certain task that needs to be done. If so, it will be added to a task
+  block.
+
+----- Idea 2 - Gym Buddy -----
+  This is an app that would target anyone who wants a healthier lifestyle. For example, college students,
+  white collar workers, and even gamers. It would be used for assisting in daily workouts in any location
+  with access to the internet. This app would help in creating gym programs and gym groups by lifting
+  level. Generally, it would encourage a healthy lifestyle, keeping track of consistency and gains.
+  
