@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100;200;300;400;500;600;700;800&display=swap');
+
+:root{
+    /*      Theme Colors       */
+    --primary-color: "#3D5AFE";
+    --secondary-color: "#FF624E";
+    --access-color: "#4CAF50";
+    --access-color-2: "#0091EA";
+
+
+    /*      Interaction Colors       */
+
+        /*      lighten Colors       */
+        --lighten-inter-color: "#899BFE";
+        --lighten-inter-color-2: "#FFA69A";
+
+        /*      default Colors       */
+        --inter-color: "#3D5AFE";
+        --inter-color-2: "#FF624E";
+
+        /*      darken Colors       */
+        --darken-inter-color: "#0125ED";
+        --darken-inter-color-2: "FF1E01";
+
+
+    /*      Font        */
+        /*      Title-Size        */
+        --title-5xl: 72px;
+        --title-4xl: 60px;
+        --title-3xl: 48px;
+        --title-2xl: 36px;
+        --title-xl: 24px;
+        --title-lg: 21px;
+        --title-md: 18px;
+        --title-sm: 16px;
+        --title-xs: 14px;
+        --title-2xs: 12px;
+        /*      Text-Size        */
+        --txt-3xl: 24px;
+        --txt-2xl: 22px;
+        --txt-xl: 20px;
+        --txt-lg: 18px;
+        --txt-md: 16px;
+        --txt-sm: 14px;
+        --txt-xs: 12px;
+        --txt-2xs: 10px;
+        /*      Family        */
+        --ff-dm: "DM Sans";
+        --ff-arch-dau: "Architects Daughter";
+}
