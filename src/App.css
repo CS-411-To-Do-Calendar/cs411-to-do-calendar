@@ -3,25 +3,28 @@
 
 :root{
     /*      Theme Colors       */
-    --primary-color: "#3D5AFE";
-    --secondary-color: "#FF624E";
-    --access-color: "#4CAF50";
-    --access-color-2: "#0091EA";
+    --color-primary: #3D5AFE;
+    --color-secondary: #FF624E;
+    --color-error: rgb(255, 0, 0);
+    --color-warning: rgb(255, 255, 0);
+    --color-success: #4CAF50;
+    --color-extra: #0091EA;
+    --color-white: #FFFFFF;
 
 
     /*      Interaction Colors       */
 
         /*      lighten Colors       */
-        --lighten-inter-color: "#899BFE";
-        --lighten-inter-color-2: "#FFA69A";
+        --lighten-inter-color: #899BFE;
+        --lighten-inter-color-2: #FFA69A;
 
         /*      default Colors       */
-        --inter-color: "#3D5AFE";
-        --inter-color-2: "#FF624E";
+        --inter-color: #3D5AFE;
+        --inter-color-2: #FF624E;
 
         /*      darken Colors       */
-        --darken-inter-color: "#0125ED";
-        --darken-inter-color-2: "FF1E01";
+        --darken-inter-color: #0125ED;
+        --darken-inter-color-2: #FF1E01;
 
 
     /*      Font        */
