@@ -109,12 +109,28 @@
     }
     
     .create-account-label {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .create-account-label-needed {
+            color: var(--color-error);
+        }
+    }
+
+    .create-account-error {
+        width: 100%;
+        text-align: left;
+        color: var(--color-error);
+        font-size: var(--txt-xs);
         margin-bottom: .25rem;
     }
-    
+
     .create-account-input {
-        margin-bottom: .5rem;
         width: 100%;
+        margin-bottom: .5rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
     }
     
     .create-account-signin-button {
