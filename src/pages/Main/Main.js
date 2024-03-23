@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Main.css'
 
 /*    image     */
 import img_google from '../../assets/google.png';
+
+/*    User Auth     */
+import { UserAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function Main() {
   // eslint-disable-next-line no-control-regex
@@ -12,6 +16,27 @@ function Main() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isPasswordMatch, setIsPasswordMatch] = useState(true);
+
+  // Google Signin
+  const { googleSignIn, user } = UserAuth();
+
+  const navigateTo = useNavigate();
+
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+    }
+    catch (errMessage) {
+      alert(errMessage);
+    }
+  };
+
+  useEffect(() => {
+    if (user != null) {
+      navigateTo('/calendar');
+      console.log(user);
+    }
+  },[navigateTo, user])
 
   const handleChangeEmail = (e) => {
     const email = e.target.value;
@@ -66,7 +91,7 @@ function Main() {
         {/* User Content Area*/}
         <div className='create-account-content-container'>
           <div className='create-account-subtitle'>Log in with your Google Account!</div>
-          <div className='create-account-button-container'>
+          <div className='create-account-button-container' onClick={handleGoogleSignIn}>
             <img src={img_google} alt='error' className='create-account-button-icon'/>
             <div className='create-account-button-text'>Sign Up With Google</div>
           </div>
