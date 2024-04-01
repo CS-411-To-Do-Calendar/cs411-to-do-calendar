@@ -33,7 +33,7 @@ function Main() {
 
   useEffect(() => {
     if (user != null) {
-      navigateTo('/calendar');
+      navigateTo('/Account');
       console.log(user);
     }
   },[navigateTo, user])
