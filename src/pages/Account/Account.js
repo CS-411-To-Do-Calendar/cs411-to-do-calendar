@@ -34,21 +34,25 @@ function Account() {
             // Stackoverflow that can help
               // https://stackoverflow.com/questions/74495585/add-google-calender-in-react-js
         const calendar = google.calendar({ version: 'v3', auth });
-        const res = await calendar.events.list({
-          calendarId: 'primary', // Fetch events from the user's primary calendar
-          timeMin: (new Date()).toISOString(),
-          maxResults: 10,
-          singleEvents: true,
-          orderBy: 'startTime',
-        }); 
-        setCalendarEvents(res.data.items); // Update state with the fetched events
+        try {
+          const res = await calendar.events.list({
+            calendarId: 'primary', // Fetch events from the user's primary calendar
+            timeMin: (new Date()).toISOString(),
+            maxResults: 10,
+            singleEvents: true,
+            orderBy: 'startTime',
+          });
+          setCalendarEvents(res.data.items); // Update state with the fetched events
+        } catch (error) {
+          console.error("error fetching calendar data: ", error);
+        }
       }
     };
     // run the function 
     fetchCalendarData();
     // display calendar events
     console.log(calendarEvents)
-  }, [user]);
+  }, [user, credentials]);
 
   // Handles Sign out on click. (This part is complete)
   const handleSignOut = async () => {
@@ -63,7 +67,17 @@ function Account() {
     <div>
       <div>Welcome to the to-do calendar {user?.displayName}!</div>
       {user?.displayName ? (
+          <>
         <div onClick={handleSignOut}>Logout!</div>
+          <div>
+            <h2>Calendar Events</h2>
+            <ul>
+              {calendarEvents.map((event, index) => (
+                  <li key = {index}>{event.summary}</li>
+              ))}
+            </ul>
+          </div>
+        </>
       ) : (
         <a href='/'>Log In</a>
       )}
