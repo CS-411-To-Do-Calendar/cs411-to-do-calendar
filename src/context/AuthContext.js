@@ -17,13 +17,13 @@ export const AuthContextProvider = ({children}) => {
     const [ credentials, setCredentials] = useState({})
     
     // Signin function 
-    const googleSignIn = () => {
+    const googleSignIn = async () => {
         // Using google auth provider,
         const provider = new GoogleAuthProvider();
         // get access to the google calendar scope. (Full access. Read write and execute)
         provider.addScope('https://www.googleapis.com/auth/calendar');
         // Pop up of all google accounts to choose 
-        signInWithPopup(auth, provider)
+        await signInWithPopup(auth, provider)
         // Whatever the result is, as long as result is not null, set the cred
         .then(result => {
             result && setCredentials(result);
