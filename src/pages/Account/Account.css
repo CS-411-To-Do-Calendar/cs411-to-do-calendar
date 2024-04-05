@@ -1,0 +1,82 @@
+@import '../../App.css';
+
+.account-page-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.account-menu-container {
+    min-width: 15%;
+    max-height: 100vh;
+    padding-top: 3rem;
+    border-right: 1px black solid;
+}
+
+.account-menu-user-greet-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    .account-menu-user-greet-icon {
+        padding-left: .25rem;
+        padding-right: .25rem;
+    }
+    .account-menu-user-greet-text {}
+}
+
+.account-menu-control-container {
+    display: flex;
+    flex-direction: column;
+    .account-menu-control-child-container{
+        display: flex;
+        align-items: center;
+        padding:.25rem;
+        padding-left: 1rem;
+        margin-left: .25rem;
+        margin-right: .25rem;
+        border-radius: 4px;
+        .account-menu-control-child-icon {
+            padding-right: .25rem;
+        }
+    }
+    .account-menu-control-child-container:hover{
+        background-color: var(--lighten-inter-color-2);
+        color: var(--color-error);
+    }
+}
+
+.account-calendar-container {
+    width: 85%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: -6rem;
+    .account-calendar-horizonal-line{
+        padding-top: 5rem;
+        border-bottom: solid 1px black;
+    }
+    .account-calendar-component-container{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.account-calendar-style{
+    width: 80%;
+    margin: 1rem;
+    border: 1px black solid;
+    border-radius: 6px;
+}
+
+.account-widget-container {
+    min-width: 20%;
+    margin: 1rem;
+    margin-left: 0rem;
+    border: 1px black solid;
+    border-radius: 6px;
+}
