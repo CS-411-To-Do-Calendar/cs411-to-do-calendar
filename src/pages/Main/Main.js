@@ -34,7 +34,6 @@ function Main() {
   useEffect(() => {
     if (user != null) {
       navigateTo('/Account');
-      console.log(user);
     }
   },[navigateTo, user])
 
