@@ -1,0 +1,13 @@
+@import '../../App.css';
+
+.ctodolist-popup-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    font-family: var(--ff-dm);
+}
+
+.priority-todo-container {
+    width: 100%;
+}
