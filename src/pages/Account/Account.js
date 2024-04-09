@@ -27,6 +27,12 @@ function Account() {
   const { user, googleSignOut, credentials } = UserAuth();
   // Storin the calendar events
   const [calendarEvents, setCalendarEvents] = useState()
+  // Store Priority to do  today events
+  const [priorityTodoToday, setPriorityTodoToday] = useState([])
+  // Store Priority to do  tomorrow events
+  const [priorityTodoTomorrow, setPriorityTodoTomorrow] = useState([])
+  // Store Priority to do  upcoming events
+  const [priorityTodoUpcoming, setPriorityTodoUpcoming] = useState([])
   // Time sync with where you are
   const localizer = momentLocalizer(moment);
   
@@ -59,8 +65,10 @@ function Account() {
       if (events.length) {
         // Filter the the event data in "events" so that we have only 'start', 'end', and 'title'
         const simplifiedEvents = events.map(event => ({
-          start: moment(event.start.dateTime).toDate() || moment(event.start.date).toDate(), // dateTime for specific times, date for all-day events
-          end: moment(event.end.dateTime).toDate() || moment(event.end.date).toDate(),
+          //I've modified this to better handle all-day events. These events will instead be labeled as starting at 12am
+          //This is because my all day events kept duplicating and causing issues :(
+          start: event.start.dateTime ? moment(event.start.dateTime).toDate() : moment(event.start.date).toDate(),
+          end: event.end.dateTime ? moment(event.end.dateTime).toDate() : moment(event.end.date).toDate(),
           title: event.summary
         }));
 
@@ -68,6 +76,8 @@ function Account() {
         console.log('Simplified Events:', simplifiedEvents);
         // Set that filtered events to calendarEvent using Setter!
         setCalendarEvents(simplifiedEvents);
+        //set the priority events based on the function filterPriorityEvents
+        filterPriorityEvents(simplifiedEvents);
       } else {
         console.log('No upcoming events found.');
       }
@@ -75,7 +85,47 @@ function Account() {
       console.error('Error fetching events:', error);
     }
   };
-  
+
+  const filterPriorityEvents = (events) => {
+    //get dates for purpose of sorting the events
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    //init arrays storing events by category
+    const todayEvents = [];
+    const tomorrowEvents = [];
+    const upcomingEvents = [];
+
+    //filter each event based on when it occurs
+    events.forEach((event) => {
+
+      //check if start date is today, if it is and it also isn't already in the list, add it
+      //had to check for duplicates. for some reason my events for today had a lot of duplicates
+      if (moment(event.start).isSame(today, 'day')) {
+        if (!todayEvents.some((e) => e.title === event.title)) {
+          todayEvents.push(event);
+        }
+
+        //same for tomorrow
+      } else if (moment(event.start).isSame(tomorrow, 'day')) {
+        if (!tomorrowEvents.some((e) => e.title === event.title)) {
+          tomorrowEvents.push(event);
+        }
+
+        //same for upcoming. for this purpose, an upcoming event is one which happens
+        //within 7 days of the current date, can change this :)
+      } else if (moment(event.start) <= moment(today).add(7, 'days')) {
+        if (!upcomingEvents.some((e) => e.title === event.title)) {
+          upcomingEvents.push(event);
+        }
+      }
+    });
+      //set the events
+    setPriorityTodoToday(todayEvents);
+    setPriorityTodoTomorrow(tomorrowEvents);
+    setPriorityTodoUpcoming(upcomingEvents);
+  };
 
   // Handles Sign out on click. (This part is complete)
   const handleSignOut = async () => {
@@ -136,6 +186,31 @@ function Account() {
             ) : (
               <a href='/'>Log In</a>
             )}
+            <div>Priority To-do</div>
+            <div>Today</div>
+            <ul>
+              {priorityTodoToday.map((event, index) => (
+                  <li key = {index}>
+                    {moment(event.start).format('LT')} - {event.title}
+                  </li>
+              ))}
+            </ul>
+            <div>Tomorrow</div>
+            <ul>
+              {priorityTodoTomorrow.map((event, index) => (
+                  <li key = {index}>
+                    {moment(event.start).format('LT')} - {event.title}
+                  </li>
+              ))}
+            </ul>
+            <div>Upcoming</div>
+            <ul>
+              {priorityTodoUpcoming.map((event, index) => (
+                  <li key = {index}>
+                    {moment(event.start).format('LT')} - {event.title}
+                  </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
