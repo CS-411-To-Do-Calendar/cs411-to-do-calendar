@@ -236,6 +236,7 @@ function Account() {
                       <li key={index}>
                         <input
                           type = "checkbox"
+                          checked = {!(priorityTodo.includes(event))}
                           onChange = {() => handleRemoveEvent(index, event)}
                           />
                         {moment(event.start).format('LT')} - {event.title}
@@ -250,6 +251,7 @@ function Account() {
                       <li key={index}>
                         <input
                             type = "checkbox"
+                            checked = {!(priorityTodo.includes(event))}
                             onChange = {() => handleRemoveEvent(index, event)}
                         />
                         {moment(event.start).format('LT')} - {event.title}
@@ -264,6 +266,7 @@ function Account() {
                       <li key={index}>
                         <input
                             type = "checkbox"
+                            checked = {!(priorityTodo.includes(event))}
                             onChange = {() => handleRemoveEvent(index, event)}
                         />
                         {moment(event.start).format('LT')} - {event.title}
