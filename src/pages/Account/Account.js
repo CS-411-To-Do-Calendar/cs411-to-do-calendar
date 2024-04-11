@@ -21,6 +21,7 @@ import { LuUsers, LuSettings } from "react-icons/lu";
 
 // CSS
 import './Account.css';
+import Progress from "../Progress/Progress";
 
 function Account() {
   // It is importing AuthContext functions
@@ -174,6 +175,11 @@ function Account() {
     }
   };
 
+      /*DUMMY DATA FOR PROGRESS --- REMOVE WHEN BACKEND IS DONE*/
+      const completedEvents = 16;
+      const todayTodo = 5;
+      const upcomingTodo = 8;
+
   return (
       <div className='account-page-container'>
         {/* Left hand side */}
@@ -274,6 +280,13 @@ function Account() {
                   ))}
                 </ul>
                 </div>
+              </div>
+              <div className = 'progress-bar-container'>
+                <Progress
+                  completedEvents = {completedEvents}
+                  todayTodo = {todayTodo}
+                  upcomingTodo = {upcomingTodo}
+                  />
               </div>
             </div>
           </div>
