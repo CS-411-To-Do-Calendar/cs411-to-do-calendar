@@ -24,7 +24,7 @@ import './Account.css';
 
 function Account() {
   // It is importing AuthContext functions
-  const { user, googleSignOut, credentials } = UserAuth();
+  const {user, googleSignOut, credentials} = UserAuth();
   // Storin the calendar events
   const [calendarEvents, setCalendarEvents] = useState()
   // Store Priority to do  today events
@@ -33,16 +33,18 @@ function Account() {
   const [priorityTodoTomorrow, setPriorityTodoTomorrow] = useState([])
   // Store Priority to do  upcoming events
   const [priorityTodoUpcoming, setPriorityTodoUpcoming] = useState([])
+  //store all priority events - this helps with remove functionality
+  const [priorityTodo, setPriorityTodo] = useState([])
   // Time sync with where you are
   const localizer = momentLocalizer(moment);
-  
+
   // Reads the Events
   const handleReadEvents = async () => {
     // Make sure we have cred! if you refresh the page, you lose the cred. We will fix it by storing cred in firebase!
     if (!credentials || !credentials._tokenResponse) {
-        console.log('No access token found');
-        return;
-      }
+      console.log('No access token found');
+      return;
+    }
     // accessToken = oauthAccessToken
     const accessToken = credentials._tokenResponse.oauthAccessToken;
     try {
@@ -59,7 +61,7 @@ function Account() {
           orderBy: 'startTime'
         }
       });
-  
+
       const events = response.data.items;
       // As long as there is at least 1 event in "events" variable,
       if (events.length) {
@@ -69,7 +71,8 @@ function Account() {
           //This is because my all day events kept duplicating and causing issues :(
           start: event.start.dateTime ? moment(event.start.dateTime).toDate() : moment(event.start.date).toDate(),
           end: event.end.dateTime ? moment(event.end.dateTime).toDate() : moment(event.end.date).toDate(),
-          title: event.summary
+          title: event.summary,
+          ID: event.id
         }));
 
         // Display the filtered events!
@@ -84,9 +87,10 @@ function Account() {
     } catch (error) {
       console.error('Error fetching events:', error);
     }
+
   };
 
-  const filterPriorityEvents = (events) => {
+  const filterPriorityEvents = async (events) => {
     //get dates for purpose of sorting the events
     const today = new Date();
     const tomorrow = new Date();
@@ -96,9 +100,12 @@ function Account() {
     const todayEvents = [];
     const tomorrowEvents = [];
     const upcomingEvents = [];
+    const allEvents = []
 
     //filter each event based on when it occurs
     events.forEach((event) => {
+
+      allEvents.push(event);
 
       //check if start date is today, if it is and it also isn't already in the list, add it
       //had to check for duplicates. for some reason my events for today had a lot of duplicates
@@ -111,20 +118,22 @@ function Account() {
       } else if (moment(event.start).isSame(tomorrow, 'day')) {
         if (!tomorrowEvents.some((e) => e.title === event.title)) {
           tomorrowEvents.push(event);
+          console.log(event)
         }
 
         //same for upcoming. for this purpose, an upcoming event is one which happens
         //within 7 days of the current date, can change this :)
-      } else if (moment(event.start) <= moment(today).add(7, 'days')) {
+      } else if (moment(event.start) <= moment(today).add(3, 'days')) {
         if (!upcomingEvents.some((e) => e.title === event.title)) {
           upcomingEvents.push(event);
         }
       }
     });
-      //set the events
+    //set the events
     setPriorityTodoToday(todayEvents);
     setPriorityTodoTomorrow(tomorrowEvents);
     setPriorityTodoUpcoming(upcomingEvents);
+    setPriorityTodo(allEvents);
   };
 
   // Handles Sign out on click. (This part is complete)
@@ -136,85 +145,130 @@ function Account() {
     }
   };
 
-  return (
-    <div className='account-page-container'>
-      {/* Left hand side */}
-      <div className='account-menu-container'>
-        <div className='account-menu-user-greet-container'>
-          <img src={img_google} alt='user-icon' className='account-menu-user-greet-icon'/>
-          <div className='account-menu-user-greet-text'>Hello {user?.displayName},</div>
-        </div>
-        <div className='account-menu-control-container'>
-          <div className='account-menu-control-child-container'>
-            <RxCalendar className='account-menu-control-child-icon'/>
-            <div>Calendar</div>
-          </div>
-          <div className='account-menu-control-child-container'>
-            <MdChecklistRtl className='account-menu-control-child-icon'/>
-            <div>To do List</div>
-          </div>
-          <div className='account-menu-control-child-container'>
-            <LuUsers className='account-menu-control-child-icon'/>
-            <div>Follows</div>
-          </div>
-          <div className='account-menu-control-child-container'>
-            <LuSettings className='account-menu-control-child-icon'/>
-            <div>Setting</div>
-          </div>
-        </div>
-      </div>
+  const handleRemoveEvent = async (index, event) => {
+    try {
+      // Make sure we have cred! if you refresh the page, you lose the cred. We will fix it by storing cred in firebase!
+      if (!credentials || !credentials._tokenResponse) {
+        console.log('No access token found');
+        return;
+      }
 
-      {/* Calendar view */}
-      <div className='account-calendar-container'>
-        <div className='account-calendar-horizonal-line'/>
-        <div className='account-calendar-component-container'>
-          <div className='account-calendar-style'>
-            <Calendar
-              localizer={localizer}
-              events={calendarEvents}
-              startAccessor="start"
-              endAccessor="end"
-              toolbar={true}
-              defaultView={'month'}
-              views={['month', 'week', 'day']}
-            />
+      // Get the access token
+      const accessToken = credentials._tokenResponse.oauthAccessToken;
+
+      // Make the DELETE request to Google Calendar API
+      await axios.delete(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${event.ID}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+
+      // Remove the event from priority todos and update calendar events
+      await handleReadEvents();
+    } catch (error) {
+      console.error('Error removing event:', error);
+    }
+  };
+
+  return (
+      <div className='account-page-container'>
+        {/* Left hand side */}
+        <div className='account-menu-container'>
+          <div className='account-menu-user-greet-container'>
+            <img src={img_google} alt='user-icon' className='account-menu-user-greet-icon'/>
+            <div className='account-menu-user-greet-text'>Hello {user?.displayName},</div>
           </div>
-          <div className='account-widget-container'>
-            <button onClick={handleReadEvents}>Read Events</button>
-            {user?.displayName ? (
-              <div onClick={handleSignOut}>Logout!</div>
-            ) : (
-              <a href='/'>Log In</a>
-            )}
-            <div>Priority To-do</div>
-            <div>Today</div>
-            <ul>
-              {priorityTodoToday.map((event, index) => (
-                  <li key = {index}>
-                    {moment(event.start).format('LT')} - {event.title}
-                  </li>
-              ))}
-            </ul>
-            <div>Tomorrow</div>
-            <ul>
-              {priorityTodoTomorrow.map((event, index) => (
-                  <li key = {index}>
-                    {moment(event.start).format('LT')} - {event.title}
-                  </li>
-              ))}
-            </ul>
-            <div>Upcoming</div>
-            <ul>
-              {priorityTodoUpcoming.map((event, index) => (
-                  <li key = {index}>
-                    {moment(event.start).format('LT')} - {event.title}
-                  </li>
-              ))}
-            </ul>
+          <div className='account-menu-control-container'>
+            <div className='account-menu-control-child-container'>
+              <RxCalendar className='account-menu-control-child-icon'/>
+              <div>Calendar</div>
+            </div>
+            <div className='account-menu-control-child-container'>
+              <MdChecklistRtl className='account-menu-control-child-icon'/>
+              <div>To do List</div>
+            </div>
+            <div className='account-menu-control-child-container'>
+              <LuUsers className='account-menu-control-child-icon'/>
+              <div>Follows</div>
+            </div>
+            <div className='account-menu-control-child-container'>
+              <LuSettings className='account-menu-control-child-icon'/>
+              <div>Setting</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Calendar view */}
+        <div className='account-calendar-container'>
+          <div className='account-calendar-horizonal-line'/>
+          <div className='account-calendar-component-container'>
+            <div className='account-calendar-style'>
+              <Calendar
+                  localizer={localizer}
+                  events={calendarEvents}
+                  startAccessor="start"
+                  endAccessor="end"
+                  toolbar={true}
+                  defaultView={'month'}
+                  views={['month', 'week', 'day']}
+              />
+            </div>
+            <div className='account-widget-container'>
+              <button onClick={handleReadEvents}>Read Events</button>
+              {user?.displayName ? (
+                  <div onClick={handleSignOut}>Logout!</div>
+              ) : (
+                  <a href='/'>Log In</a>
+              )}
+              <div className="priority-todo-container">
+                 <div id = 'priority-header'>Priority To-do</div>
+                <div className = "today-container">
+                <div>Today</div>
+                <ul>
+                  {priorityTodoToday.map((event, index) => (
+                      <li key={index}>
+                        <input
+                          type = "checkbox"
+                          onChange = {() => handleRemoveEvent(index, event)}
+                          />
+                        {moment(event.start).format('LT')} - {event.title}
+                      </li>
+                  ))}
+                </ul>
+                </div>
+                <div className = 'tomorrow-container'>
+                <div>Tomorrow</div>
+                <ul>
+                  {priorityTodoTomorrow.map((event, index) => (
+                      <li key={index}>
+                        <input
+                            type = "checkbox"
+                            onChange = {() => handleRemoveEvent(index, event)}
+                        />
+                        {moment(event.start).format('LT')} - {event.title}
+                      </li>
+                  ))}
+                </ul>
+                </div>
+                <div className = 'upcoming-container'>
+                <div>Upcoming</div>
+                <ul>
+                  {priorityTodoUpcoming.map((event, index) => (
+                      <li key={index}>
+                        <input
+                            type = "checkbox"
+                            onChange = {() => handleRemoveEvent(index, event)}
+                        />
+                        {moment(event.start).format('LT')} - {event.title}
+                      </li>
+                  ))}
+                </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
   );
 }
 
