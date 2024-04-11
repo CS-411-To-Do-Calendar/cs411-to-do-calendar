@@ -21,6 +21,7 @@ import { LuUsers, LuSettings } from "react-icons/lu";
 
 // CSS
 import './Account.css';
+import Progress from './Progress/Progress';
 
 function Account() {
   // It is importing AuthContext functions
@@ -275,6 +276,9 @@ function Account() {
                 </ul>
                 </div>
               </div>
+
+              {/* make a dummy data somewhere up there */}
+              <Progress done={19} todayTD={8} upcomingTD={7}/>
             </div>
           </div>
         </div>
