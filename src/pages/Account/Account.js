@@ -69,6 +69,7 @@ function Account() {
         const simplifiedEvents = events.map(event => ({
           //I've modified this to better handle all-day events. These events will instead be labeled as starting at 12am
           //This is because my all day events kept duplicating and causing issues :(
+          //I also added the ID mapping for the remove function (differing between events with same title)
           start: event.start.dateTime ? moment(event.start.dateTime).toDate() : moment(event.start.date).toDate(),
           end: event.end.dateTime ? moment(event.end.dateTime).toDate() : moment(event.end.date).toDate(),
           title: event.summary,
@@ -97,6 +98,7 @@ function Account() {
     tomorrow.setDate(tomorrow.getDate() + 1);
 
     //init arrays storing events by category
+    //allEvents is useful in the remove function, less so for actually displaying the info
     const todayEvents = [];
     const tomorrowEvents = [];
     const upcomingEvents = [];
@@ -104,7 +106,7 @@ function Account() {
 
     //filter each event based on when it occurs
     events.forEach((event) => {
-
+    //add every event to allEvents
       allEvents.push(event);
 
       //check if start date is today, if it is and it also isn't already in the list, add it
@@ -122,7 +124,7 @@ function Account() {
         }
 
         //same for upcoming. for this purpose, an upcoming event is one which happens
-        //within 7 days of the current date, can change this :)
+        //within 3 days of the current date, can change this :)
       } else if (moment(event.start) <= moment(today).add(3, 'days')) {
         if (!upcomingEvents.some((e) => e.title === event.title)) {
           upcomingEvents.push(event);
@@ -145,9 +147,10 @@ function Account() {
     }
   };
 
+  //handleRemoveEvent is called by the JSX code when the user clicks a checkbox next to an event on Priority Todo
   const handleRemoveEvent = async (index, event) => {
     try {
-      // Make sure we have cred! if you refresh the page, you lose the cred. We will fix it by storing cred in firebase!
+      // Make sure we have cred
       if (!credentials || !credentials._tokenResponse) {
         console.log('No access token found');
         return;
@@ -163,7 +166,8 @@ function Account() {
         }
       });
 
-      // Remove the event from priority todos and update calendar events
+      // Since we have removed events from the google calendar, we call handleReadEvents to get the updated
+      //version of the calendar
       await handleReadEvents();
     } catch (error) {
       console.error('Error removing event:', error);
@@ -220,6 +224,9 @@ function Account() {
               ) : (
                   <a href='/'>Log In</a>
               )}
+              {/* This code is for the priority to do list on the righthand side of the screen
+              This works by having individual containers for each type of event: today, tomorrow, and upcoming.
+              We put a checkbox next to each event in the case that we have removed it*/}
               <div className="priority-todo-container">
                  <div id = 'priority-header'>Priority To-do</div>
                 <div className = "today-container">
