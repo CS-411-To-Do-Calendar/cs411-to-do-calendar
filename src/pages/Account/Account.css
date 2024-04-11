@@ -80,3 +80,56 @@
     border: 1px black solid;
     border-radius: 6px;
 }
+.priority-todo-container {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#priority-header{
+    font-size: 24px;
+    font-family: Arial;
+    font-weight: bold;
+}
+
+.today-container, .tomorrow-container{
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.today-container, .tomorrow-container, .upcoming-container {
+    margin-top: 10px;
+}
+
+
+.today-container div, .tomorrow-container  div, .upcoming-container  div {
+    font-size: 20px;
+    font-family: Arial;
+    font-weight: bold;
+}
+
+
+.priority-todo-container ul li {
+    list-style: none;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.today-container ul li{
+    background-color: orange;
+}
+
+.tomorrow-container ul li, .upcoming-container ul li{
+    background-color: deepskyblue;
+}
+
+.priority-todo-container input[type="checkbox"] {
+    vertical-align: middle;
+    margin-right: 5px;
+}
