@@ -182,8 +182,8 @@ function Account() {
 
       /*DUMMY DATA FOR PROGRESS --- REMOVE WHEN BACKEND IS DONE*/
       const completedEvents = 16;
-      const todayTodo = 5;
-      const upcomingTodo = 8;
+      const todayTodo = priorityTodoToday.length;
+      const upcomingTodo = priorityTodoUpcoming.length;
 
   return (
       <div className='account-page-container'>
