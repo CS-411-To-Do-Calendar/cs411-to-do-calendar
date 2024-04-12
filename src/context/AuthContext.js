@@ -26,6 +26,18 @@ export const AuthContextProvider = ({children}) => {
         await signInWithPopup(auth, provider)
         // Whatever the result is, as long as result is not null, set the cred
         .then(result => {
+            // result._tokenResponse.oauthAccessToken
+
+            // check if result is null or not
+
+            // if it is not then you do the following:
+            
+            // if (!userExist(uid))
+                // then you can add user with oauthToken here
+            // Else
+                // the user exist so update user oauthToken here
+
+
             result && setCredentials(result);
         })
         // Shit fails then throw error

@@ -21,7 +21,7 @@ import { LuUsers, LuSettings } from "react-icons/lu";
 
 // CSS
 import './Account.css';
-import Progress from "../Progress/Progress";
+import Progress from './Progress/Progress';
 
 function Account() {
   // It is importing AuthContext functions
@@ -38,6 +38,8 @@ function Account() {
   const [priorityTodo, setPriorityTodo] = useState([])
   // Time sync with where you are
   const localizer = momentLocalizer(moment);
+  
+
 
   // Reads the Events
   const handleReadEvents = async () => {
@@ -47,7 +49,10 @@ function Account() {
       return;
     }
     // accessToken = oauthAccessToken
+
+    console.log(credentials);
     const accessToken = credentials._tokenResponse.oauthAccessToken;
+
     try {
       const response = await axios.get('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
         headers: {
