@@ -27,7 +27,7 @@ import { getDone, setDone} from '../../firestore/firebaseTask';
 
 function Account() {
   // It is importing AuthContext functions
-  const {user, googleSignOut, credentials} = UserAuth();
+  const {user, googleSignOut } = UserAuth();
   // Storin the calendar events
   const [calendarEvents, setCalendarEvents] = useState()
   // Store Priority to do  today events
@@ -47,15 +47,19 @@ function Account() {
   
   const navigate = useNavigate();
 
+  const fetchToken = async () => {
+    setAccessToken(await getUserOauthToken(user.uid));
+    setDoneTD(await getDone(user.uid));
+  };
+
+  const getComplete = async () => {
+    setDoneTD(await getDone(user.uid));
+  };
 
   useEffect(() => {
     // This fetches and sets the access token as soon as the component mounts
-    const fetchToken = async () => {
-        setAccessToken(await getUserOauthToken(user.uid));
-        setDoneTD(await getDone(user.uid));
-    };
     fetchToken();
-  }, []); // Dependency on user.uid ensures this runs when the user id changes
+  }, [user]); // Dependency on user.uid ensures this runs when the user id changes
 
 
 
@@ -99,7 +103,7 @@ function Account() {
         }));
 
         // Display the filtered events!
-        console.log('Simplified Events:', simplifiedEvents);
+        // console.log('Simplified Events:', simplifiedEvents);
         // Set that filtered events to calendarEvent using Setter!
         setCalendarEvents(simplifiedEvents);
         //set the priority events based on the function filterPriorityEvents
@@ -198,6 +202,7 @@ function Account() {
   useEffect(() => {
     setTodayTD(priorityTodoToday.length);
     setTotalUCTD(priorityTodoTomorrow.length + priorityTodoUpcoming.length);
+    getComplete();
   }, [priorityTodoToday, priorityTodoTomorrow, priorityTodoUpcoming, doneTD]);
 
   return (

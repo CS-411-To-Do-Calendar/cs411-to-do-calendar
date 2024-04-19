@@ -1,19 +1,12 @@
-import React from 'react'
 import {
     collection,
     getDocs,
     addDoc,
-    deleteDoc,
     doc,
     getDoc,
-    query,
-    where,
-    onSnapshot,
-    updateDoc, 
     setDoc
 } from 'firebase/firestore';
 import { db } from '../firebase.js'
-import {auth} from '../firebase.js'
 const userCollectionRef = collection(db, "user")
 
 
@@ -40,7 +33,7 @@ export const userExist = async ( uid ) => {
 
 
 export const addUser = async (uid, oauthToken) => {
-    const docRef = await addDoc(userCollectionRef,
+    await addDoc(userCollectionRef,
         {
             "uid": uid,
             "OauthToken": oauthToken
