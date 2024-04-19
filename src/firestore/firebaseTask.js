@@ -8,7 +8,8 @@ import {
     updateDoc, 
     getDoc,
     query, 
-    where 
+    where, 
+    setDoc
 } from 'firebase/firestore';
 import { db } from '../firebase.js'
 
@@ -22,8 +23,40 @@ export const getTaskData = async ( uid ) => {
     // getDoc
 }
 
-export const setTaskData = async ( uid, todayTD, done, upcomingTD ) => {
-    // updateDoc
+// export const setTaskData = async ( uid, Done ) =>
+//  {
+//     const userDocRef = doc(db, 'task', uid);
+//     await setDoc(userDocRef,
+//         {
+//             "uid": uid, 
+//             "done" : Done + 1
+//         }, 
+//         {
+//             merge:true
+//         });
+// }
+
+export const getDone = async (uid) => {
+    const q = query(collection(db, 'task'), where('uid', '==', uid));
+    const querySnapshot = await getDocs(q);
+    let done;
+    querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        done = data.done;
+    });
+    return done;
+}
+
+
+export const setDone = async (uid, Done) => 
+{
+    const userDocRef = doc(db, 'task', uid);
+    await setDoc(userDocRef,
+        {
+            "uid": uid,
+            "done" : Done
+        } 
+)
 }
 
 
