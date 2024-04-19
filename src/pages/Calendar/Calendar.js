@@ -6,15 +6,15 @@ import './Calendar.css'
 function Calendar({props}) {
     
     return (
-        <div classname='todolist-popup-container'>
-            <div classname='priority-todo-container'>
+        <div className='todolist-popup-container'>
+            <div className='priority-todo-container'>
                 <div>Priority To-Do</div>
-                <div classname='today'></div>
-                <div classname='tomorrow'></div>
-                <div classname='upcoming'></div>
+                <div className='today'></div>
+                <div className='tomorrow'></div>
+                <div className='upcoming'></div>
             </div>
-            <div classname='activity'></div>
-            <div classname='progress'></div>
+            <div className='activity'></div>
+            <div className='progress'></div>
         </div>
     )
 

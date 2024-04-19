@@ -1,0 +1,64 @@
+/* Progress.css */
+
+.container{
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding: 10px;
+}
+
+#header-style{
+    font-size: 24px;
+    font-family: Arial;
+    font-weight: bold;
+}
+
+.progress-container {
+    margin-top: 10px;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bar-parent {
+    width: 95%;
+    display: flex;
+}
+
+.progress-bar {
+    height: 10px;
+    border-radius: 10px;
+}
+
+.completed {
+    background-color: green;
+}
+
+.today-to-do {
+    background-color: blue;
+}
+
+.upcoming-to-do {
+    background-color: orange;
+}
+
+.task-count {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin: 5px;
+    font-family: Arial;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}

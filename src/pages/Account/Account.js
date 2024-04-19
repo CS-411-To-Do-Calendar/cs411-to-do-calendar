@@ -184,6 +184,11 @@ function Account() {
     }
   };
 
+      /*DUMMY DATA FOR PROGRESS --- REMOVE WHEN BACKEND IS DONE*/
+      const completedEvents = 16;
+      const todayTodo = priorityTodoToday.length;
+      const upcomingTodo = priorityTodoUpcoming.length;
+
   return (
     <div className='account-page-container'>
       {/* Left hand side */}
@@ -197,17 +202,24 @@ function Account() {
             <RxCalendar className='account-menu-control-child-icon' />
             <div>Calendar</div>
           </div>
-          <div className='account-menu-control-child-container'>
-            <MdChecklistRtl className='account-menu-control-child-icon' />
-            <div>To do List</div>
-          </div>
-          <div className='account-menu-control-child-container'>
-            <LuUsers className='account-menu-control-child-icon' />
-            <div>Follows</div>
-          </div>
-          <div className='account-menu-control-child-container'>
-            <LuSettings className='account-menu-control-child-icon' />
-            <div>Setting</div>
+
+          <div className='account-menu-control-container'>
+            <div className='account-menu-control-child-container'>
+              <RxCalendar className='account-menu-control-child-icon'/>
+              <div>Calendar</div>
+            </div>
+            <div className='account-menu-control-child-container'>
+              <MdChecklistRtl className='account-menu-control-child-icon'/>
+              <div>To do List</div>
+            </div>
+            <div className='account-menu-control-child-container'>
+              <LuUsers className='account-menu-control-child-icon'/>
+              <a href='/chatbot'>CHATGPT</a>
+            </div>
+            <div className='account-menu-control-child-container'>
+              <LuSettings className='account-menu-control-child-icon'/>
+              <div>Setting</div>
+            </div>
           </div>
         </div>
       </div>
@@ -283,6 +295,13 @@ function Account() {
                     </li>
                   ))}
                 </ul>
+              </div>
+              <div className = 'progress-bar-container'>
+                <Progress
+                  completedEvents = {completedEvents}
+                  todayTodo = {todayTodo}
+                  upcomingTodo = {upcomingTodo}
+                  />
               </div>
             </div>
 
