@@ -7,7 +7,7 @@ import Main from './pages/Main/Main';
 import Account from './pages/Account/Account';
 import Todo from './pages/Todo/Todo';
 import Protected from './componets/Protected';
-import Chatbot from './componets/Chatbot/Chatbot';
+import Chatbot from './pages/Chatbot/Chatbot';
 
 function App() {
   return (
