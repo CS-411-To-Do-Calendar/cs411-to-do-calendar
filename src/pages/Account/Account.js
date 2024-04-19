@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 // Firebase!
 import { UserAuth } from '../../context/AuthContext';
 
@@ -22,11 +22,10 @@ import { LuUsers, LuSettings } from "react-icons/lu";
 // CSS
 import './Account.css';
 import Progress from './Progress/Progress';
-import { getUserOauthToken } from '../../firestore/firebaseUser';
 
 function Account() {
   // It is importing AuthContext functions
-  const { user, googleSignOut } = UserAuth();
+  const {user, googleSignOut, credentials} = UserAuth();
   // Storin the calendar events
   const [calendarEvents, setCalendarEvents] = useState()
   // Store Priority to do  today events
@@ -39,24 +38,20 @@ function Account() {
   const [priorityTodo, setPriorityTodo] = useState([])
   // Time sync with where you are
   const localizer = momentLocalizer(moment);
-
-  const uid = user.uid;
-
-  const [accessToken, setAccessToken] = useState();
-  (async () => {
-    setAccessToken(await getUserOauthToken(uid));
-  }
-  )();
+  const navigate = useNavigate();
 
 
-  // const accessToken = getUserOauthToken(uid);
   // Reads the Events
   const handleReadEvents = async () => {
     // Make sure we have cred! if you refresh the page, you lose the cred. We will fix it by storing cred in firebase!
-    if (!accessToken) {
+    if (!credentials || !credentials._tokenResponse) {
       console.log('No access token found');
       return;
     }
+    // accessToken = oauthAccessToken
+
+    console.log(credentials);
+    const accessToken = credentials._tokenResponse.oauthAccessToken;
 
     try {
       const response = await axios.get('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
@@ -88,7 +83,7 @@ function Account() {
         }));
 
         // Display the filtered events!
-        // console.log('Simplified Events:', simplifiedEvents);
+        console.log('Simplified Events:', simplifiedEvents);
         // Set that filtered events to calendarEvent using Setter!
         setCalendarEvents(simplifiedEvents);
         //set the priority events based on the function filterPriorityEvents
@@ -117,7 +112,7 @@ function Account() {
 
     //filter each event based on when it occurs
     events.forEach((event) => {
-      //add every event to allEvents
+    //add every event to allEvents
       allEvents.push(event);
 
       //check if start date is today, if it is and it also isn't already in the list, add it
@@ -131,7 +126,7 @@ function Account() {
       } else if (moment(event.start).isSame(tomorrow, 'day')) {
         if (!tomorrowEvents.some((e) => e.title === event.title)) {
           tomorrowEvents.push(event);
-          // console.log(event)
+          console.log(event)
         }
 
         //same for upcoming. for this purpose, an upcoming event is one which happens
@@ -162,12 +157,13 @@ function Account() {
   const handleRemoveEvent = async (index, event) => {
     try {
       // Make sure we have cred
-      if (!accessToken) {
+      if (!credentials || !credentials._tokenResponse) {
         console.log('No access token found');
         return;
       }
 
       // Get the access token
+      const accessToken = credentials._tokenResponse.oauthAccessToken;
 
       // Make the DELETE request to Google Calendar API
       await axios.delete(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${event.ID}`, {
@@ -190,111 +186,105 @@ function Account() {
       const upcomingTodo = priorityTodoUpcoming.length;
 
   return (
-    <div className='account-page-container'>
-      {/* Left hand side */}
-      <div className='account-menu-container'>
-        <div className='account-menu-user-greet-container'>
-          <img src={img_google} alt='user-icon' className='account-menu-user-greet-icon' />
-          <div className='account-menu-user-greet-text'>Hello {user?.displayName},</div>
-        </div>
-        <div className='account-menu-control-container'>
-          <div className='account-menu-control-child-container'>
-            <RxCalendar className='account-menu-control-child-icon' />
-            <div>Calendar</div>
+      <div className='account-page-container'>
+        {/* Left hand side */}
+        <div className='account-menu-container'>
+          <div className='account-menu-user-greet-container'>
+            <img src={img_google} alt='user-icon' className='account-menu-user-greet-icon'/>
+            <div className='account-menu-user-greet-text'>Hello {user?.displayName},</div>
           </div>
-
           <div className='account-menu-control-container'>
-            <div className='account-menu-control-child-container'>
+            <div className='account-menu-control-child-container' onClick={() => navigate('/account')}>
               <RxCalendar className='account-menu-control-child-icon'/>
               <div>Calendar</div>
             </div>
-            <div className='account-menu-control-child-container'>
+            <div className='account-menu-control-child-container' onClick={() => navigate('/todo')}>
               <MdChecklistRtl className='account-menu-control-child-icon'/>
               <div>To do List</div>
             </div>
-            <div className='account-menu-control-child-container'>
+            <div className='account-menu-control-child-container' onClick={() => navigate('/chatbot')}>
               <LuUsers className='account-menu-control-child-icon'/>
               <a href='/chatbot'>CHATGPT</a>
             </div>
-            <div className='account-menu-control-child-container'>
+            <div className='account-menu-control-child-container' onClick={() => navigate('/')}>
               <LuSettings className='account-menu-control-child-icon'/>
               <div>Setting</div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Calendar view */}
-      <div className='account-calendar-container'>
-        <div className='account-calendar-horizonal-line' />
-        <div className='account-calendar-component-container'>
-          <div className='account-calendar-style'>
-            <Calendar
-              localizer={localizer}
-              events={calendarEvents}
-              startAccessor="start"
-              endAccessor="end"
-              toolbar={true}
-              defaultView={'month'}
-              views={['month', 'week', 'day']}
-            />
-          </div>
-          <div className='account-widget-container'>
-            <button onClick={handleReadEvents}>Read Events</button>
-            {user?.displayName ? (
-              <div onClick={handleSignOut}>Logout!</div>
-            ) : (
-              <a href='/'>Log In</a>
-            )}
-            {/* This code is for the priority to do list on the righthand side of the screen
+        {/* Calendar view */}
+        <div className='account-calendar-container'>
+          <div className='account-calendar-horizonal-line'/>
+          <div className='account-calendar-component-container'>
+            <div className='account-calendar-style'>
+              <Calendar
+                  localizer={localizer}
+                  events={calendarEvents}
+                  startAccessor="start"
+                  endAccessor="end"
+                  toolbar={true}
+                  defaultView={'month'}
+                  views={['month', 'week', 'day']}
+              />
+            </div>
+            <div className='account-widget-container'>
+              <button onClick={handleReadEvents}>Read Events</button>
+              {user?.displayName ? (
+                  <div onClick={handleSignOut}>Logout!</div>
+              ) : (
+                  <a href='/'>Log In</a>
+              )}
+              {/* This code is for the priority to do list on the righthand side of the screen
               This works by having individual containers for each type of event: today, tomorrow, and upcoming.
               We put a checkbox next to each event in the case that we have removed it*/}
-            <div className="priority-todo-container">
-              <div id='priority-header'>Priority To-do</div>
-              <div className="today-container">
+              <div className="priority-todo-container">
+                 <div id = 'priority-header'>Priority To-do</div>
+                <div className = "today-container">
                 <div>Today</div>
                 <ul>
                   {priorityTodoToday.map((event, index) => (
-                    <li key={index}>
-                      <input
-                        type="checkbox"
-                        checked={!(priorityTodo.includes(event))}
-                        onChange={() => handleRemoveEvent(index, event)}
-                      />
-                      {moment(event.start).format('LT')} - {event.title}
-                    </li>
+                      <li key={index}>
+                        <input
+                          type = "checkbox"
+                          checked = {!(priorityTodo.includes(event))}
+                          onChange = {() => handleRemoveEvent(index, event)}
+                          />
+                        {moment(event.start).format('LT')} - {event.title}
+                      </li>
                   ))}
                 </ul>
-              </div>
-              <div className='tomorrow-container'>
+                </div>
+                <div className = 'tomorrow-container'>
                 <div>Tomorrow</div>
                 <ul>
                   {priorityTodoTomorrow.map((event, index) => (
-                    <li key={index}>
-                      <input
-                        type="checkbox"
-                        checked={!(priorityTodo.includes(event))}
-                        onChange={() => handleRemoveEvent(index, event)}
-                      />
-                      {moment(event.start).format('LT')} - {event.title}
-                    </li>
+                      <li key={index}>
+                        <input
+                            type = "checkbox"
+                            checked = {!(priorityTodo.includes(event))}
+                            onChange = {() => handleRemoveEvent(index, event)}
+                        />
+                        {moment(event.start).format('LT')} - {event.title}
+                      </li>
                   ))}
                 </ul>
-              </div>
-              <div className='upcoming-container'>
+                </div>
+                <div className = 'upcoming-container'>
                 <div>Upcoming</div>
                 <ul>
                   {priorityTodoUpcoming.map((event, index) => (
-                    <li key={index}>
-                      <input
-                        type="checkbox"
-                        checked={!(priorityTodo.includes(event))}
-                        onChange={() => handleRemoveEvent(index, event)}
-                      />
-                      {moment(event.start).format('LT')} - {event.title}
-                    </li>
+                      <li key={index}>
+                        <input
+                            type = "checkbox"
+                            checked = {!(priorityTodo.includes(event))}
+                            onChange = {() => handleRemoveEvent(index, event)}
+                        />
+                        {moment(event.start).format('LT')} - {event.title}
+                      </li>
                   ))}
                 </ul>
+                </div>
               </div>
               <div className = 'progress-bar-container'>
                 <Progress
@@ -304,13 +294,9 @@ function Account() {
                   />
               </div>
             </div>
-
-            {/* make a dummy data somewhere up there */}
-            <Progress done={19} todayTD={8} upcomingTD={7} />
           </div>
         </div>
       </div>
-    </div>
   );
 }
 
