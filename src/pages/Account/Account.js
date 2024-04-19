@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Firebase!
 import { UserAuth } from '../../context/AuthContext';
@@ -23,6 +23,7 @@ import { LuUsers, LuSettings } from "react-icons/lu";
 import './Account.css';
 import Progress from './Progress/Progress';
 import { getUserOauthToken } from '../../firestore/firebaseUser';
+import { getDone, setDone} from '../../firestore/firebaseTask';
 
 function Account() {
   // It is importing AuthContext functions
@@ -40,11 +41,16 @@ function Account() {
   // Time sync with where you are
   const localizer = momentLocalizer(moment);
 
+  const [todayTD, setTodayTD] = useState();
+  const [totalUCTD, setTotalUCTD] = useState();
+  const [doneTD, setDoneTD] = useState(0);
+  
   const uid = user.uid;
 
   const [accessToken, setAccessToken] = useState();
   (async () => {
     setAccessToken(await getUserOauthToken(uid));
+    setDoneTD(await getDone(uid));
   }
   )();
 
@@ -52,6 +58,7 @@ function Account() {
   // const accessToken = getUserOauthToken(uid);
   // Reads the Events
   const handleReadEvents = async () => {
+
     // Make sure we have cred! if you refresh the page, you lose the cred. We will fix it by storing cred in firebase!
     if (!accessToken) {
       console.log('No access token found');
@@ -161,6 +168,8 @@ function Account() {
   //handleRemoveEvent is called by the JSX code when the user clicks a checkbox next to an event on Priority Todo
   const handleRemoveEvent = async (index, event) => {
     try {
+      setDoneTD(doneTD + 1);
+      setDone(uid, doneTD);
       // Make sure we have cred
       if (!accessToken) {
         console.log('No access token found');
@@ -184,10 +193,10 @@ function Account() {
     }
   };
 
-      /*DUMMY DATA FOR PROGRESS --- REMOVE WHEN BACKEND IS DONE*/
-      const completedEvents = 16;
-      const todayTodo = priorityTodoToday.length;
-      const upcomingTodo = priorityTodoUpcoming.length;
+  useEffect(() => {
+    setTodayTD(priorityTodoToday.length);
+    setTotalUCTD(priorityTodoTomorrow.length + priorityTodoUpcoming.length);
+  }, [priorityTodoToday, priorityTodoTomorrow, priorityTodoUpcoming, doneTD]);
 
   return (
     <div className='account-page-container'>
@@ -205,19 +214,19 @@ function Account() {
 
           <div className='account-menu-control-container'>
             <div className='account-menu-control-child-container'>
-              <RxCalendar className='account-menu-control-child-icon'/>
+              <RxCalendar className='account-menu-control-child-icon' />
               <div>Calendar</div>
             </div>
             <div className='account-menu-control-child-container'>
-              <MdChecklistRtl className='account-menu-control-child-icon'/>
+              <MdChecklistRtl className='account-menu-control-child-icon' />
               <div>To do List</div>
             </div>
             <div className='account-menu-control-child-container'>
-              <LuUsers className='account-menu-control-child-icon'/>
+              <LuUsers className='account-menu-control-child-icon' />
               <a href='/chatbot'>CHATGPT</a>
             </div>
             <div className='account-menu-control-child-container'>
-              <LuSettings className='account-menu-control-child-icon'/>
+              <LuSettings className='account-menu-control-child-icon' />
               <div>Setting</div>
             </div>
           </div>
@@ -296,17 +305,10 @@ function Account() {
                   ))}
                 </ul>
               </div>
-              <div className = 'progress-bar-container'>
-                <Progress
-                  completedEvents = {completedEvents}
-                  todayTodo = {todayTodo}
-                  upcomingTodo = {upcomingTodo}
-                  />
-              </div>
             </div>
 
             {/* make a dummy data somewhere up there */}
-            <Progress done={19} todayTD={8} upcomingTD={7} />
+            <Progress completedEvents={doneTD} todayTodo={todayTD} upcomingTodo={totalUCTD} />
           </div>
         </div>
       </div>
