@@ -7,6 +7,7 @@ import Main from './pages/Main/Main';
 import Account from './pages/Account/Account';
 import Todo from './pages/Todo/Todo';
 import Protected from './componets/Protected';
+import Chatbot from './componets/Chatbot/Chatbot';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path='/' element={ <Main /> } />
             <Route path='/Account' element={ <Protected><Account /></Protected> } />
             <Route path='/Todo' element={ <Protected><Todo /></Protected> } />
+            <Route path='/chatbot' element={ <Protected><Chatbot /></Protected> } />
           </Routes>
         </AuthContextProvider>
       </Router>

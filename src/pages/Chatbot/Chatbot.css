@@ -1,0 +1,51 @@
+@import '../../App.css';
+
+.chat-container {
+    width: 100%;
+    max-width: 360px;  /* Typical width for chat apps */
+    height: 60vh;  /* Adjusted for better visibility */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Aligns content to the bottom */
+    background-color: #f0f0f0;  /* Neutral background */
+    border-radius: 8px;  /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);  /* Subtle shadow for depth */
+    overflow: hidden;  /* Contains the children within the rounded border */
+    position: relative;
+    margin: 20px auto;  /* Center align the chat container */
+}
+
+.message-container {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 10px;  /* Padding inside the message container */
+    height: 100%;
+}
+
+.user-message, .bot-message {
+    margin-bottom: 8px;
+    padding: 8px 12px;  /* Padding inside each message bubble */
+    border-radius: 16px;  /* Rounded corners for message bubbles */
+    color: white;  /* Text color inside the message bubble */
+    font-size: 0.9rem;
+    max-width: 70%;  /* Max width of message bubble */
+}
+
+.user-message {
+    background-color: #007bff;  /* A nice blue */
+    align-self: flex-end;  /* Aligns user messages to the right */
+}
+
+.bot-message {
+    background-color: #7048e8;  /* A subtle purple */
+    align-self: flex-start;  /* Aligns bot messages to the left */
+}
+
+.chat-input {
+    margin-top: 5px;
+    border-radius: 8px; 
+    padding: 10px 15px;
+    width: auto;
+    font-size: 1rem;  /* Larger font for easy typing */
+}

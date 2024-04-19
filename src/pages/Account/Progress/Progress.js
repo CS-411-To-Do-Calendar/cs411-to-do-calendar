@@ -1,6 +1,6 @@
 import React from 'react';
 import './Progress.css';
-import {total} from "react-big-calendar/lib/utils/dates";
+// import {total} from "react-big-calendar/lib/utils/dates";
 
 //Progress takes 3 inputs and calculates percentages to display a
 //Progress bar on the screen, is exported to Account.js
