@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from 'axios';
+// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 // Firebase!
@@ -16,7 +16,7 @@ import '../Account/Account.css';
 import { RxCalendar } from "react-icons/rx";
 import { MdChecklistRtl } from "react-icons/md";
 import { LuUsers, LuSettings } from "react-icons/lu";
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 
 function Todo() {
   const { user } = UserAuth();
