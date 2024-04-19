@@ -83,12 +83,11 @@ export const setUserOauthToken = async (uid, oauthToken) => {
 
 
 export const getUserOauthToken = async (uid) => {
-    const docRef = await getDoc(userCollectionRef,
-        {
-            "uid": uid
-        }
-    );
-
+    const userDocRef = doc(db, 'user', uid);
+    const docSnap = await getDoc(userDocRef);
+    const userData = docSnap.data();
+    const oauthAccessToken = userData.OauthToken; 
+    return oauthAccessToken; 
 }
 
 
