@@ -204,7 +204,7 @@ function Account() {
             </div>
             <div className='account-menu-control-child-container'>
               <LuUsers className='account-menu-control-child-icon'/>
-              <div>Follows</div>
+              <a href='/chatbot'>CHATGPT</a>
             </div>
             <div className='account-menu-control-child-container'>
               <LuSettings className='account-menu-control-child-icon'/>
