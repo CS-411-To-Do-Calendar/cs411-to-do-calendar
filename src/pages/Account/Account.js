@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // Firebase!
 import { UserAuth } from '../../context/AuthContext';
@@ -43,30 +43,31 @@ function Account() {
   const [todayTD, setTodayTD] = useState();
   const [totalUCTD, setTotalUCTD] = useState();
   const [doneTD, setDoneTD] = useState(0);
-  
-  const uid = user.uid;
-
   const [accessToken, setAccessToken] = useState();
-  (async () => {
-    setAccessToken(await getUserOauthToken(uid));
-    setDoneTD(await getDone(uid));
-    }
-  )();
+  
   const navigate = useNavigate();
+
+
+  useEffect(() => {
+    // This fetches and sets the access token as soon as the component mounts
+    const fetchToken = async () => {
+        setAccessToken(await getUserOauthToken(user.uid));
+        setDoneTD(await getDone(user.uid));
+    };
+    fetchToken();
+  }, []); // Dependency on user.uid ensures this runs when the user id changes
+
 
 
   // Reads the Events
   const handleReadEvents = async () => {
 
     // Make sure we have cred! if you refresh the page, you lose the cred. We will fix it by storing cred in firebase!
-    if (!credentials || !credentials._tokenResponse) {
+    if (!accessToken) {
       console.log('No access token found');
       return;
     }
     // accessToken = oauthAccessToken
-
-    console.log(credentials);
-    const accessToken = credentials._tokenResponse.oauthAccessToken;
 
     try {
       const response = await axios.get('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
@@ -172,15 +173,12 @@ function Account() {
   const handleRemoveEvent = async (index, event) => {
     try {
       setDoneTD(doneTD + 1);
-      setDone(uid, doneTD);
+      setDone(user.uid, doneTD);
       // Make sure we have cred
-      if (!credentials || !credentials._tokenResponse) {
+      if (!accessToken) {
         console.log('No access token found');
         return;
       }
-
-      // Get the access token
-      const accessToken = credentials._tokenResponse.oauthAccessToken;
 
       // Make the DELETE request to Google Calendar API
       await axios.delete(`https://www.googleapis.com/calendar/v3/calendars/primary/events/${event.ID}`, {
@@ -303,8 +301,8 @@ function Account() {
                 </ul>
                 </div>
               </div>
+              <Progress completedEvents={doneTD} todayTodo={todayTD} upcomingTodo={totalUCTD} />
             </div>
-            <Progress completedEvents={doneTD} todayTodo={todayTD} upcomingTodo={totalUCTD} />
           </div>
         </div>
       </div>
