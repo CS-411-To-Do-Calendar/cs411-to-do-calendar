@@ -7,13 +7,15 @@ import {
     onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from '../firebase'
-import { userExist, setUserOauthToken } from '../firestore/firebaseUser.js'
+import { userExist, setUserOauthToken, addUser } from '../firestore/firebaseUser.js'
 import { createTask } from "../firestore/firebaseTask.js";
+import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
     // Getter and Setter for storing user data
     const [user, setUser] = useState({});
+    const navigateTo = useNavigate();
 
     // Signin function 
     const googleSignIn = async () => {
@@ -26,16 +28,17 @@ export const AuthContextProvider = ({ children }) => {
             // Whatever the result is, as long as result is not null, set the cred
             // Inside your googleSignIn function:
         .then(async result => {
-            const uid = result.user.uid;
-            console.log("UID: ", uid);  // Log UID to ensure it's correct
-            if (await userExist(uid)) {
-                await setUserOauthToken(uid, result._tokenResponse.oauthAccessToken);
+            if (await userExist(result.user.uid)) {
+                await setUserOauthToken(result.user.uid, result._tokenResponse.oauthAccessToken);
                 console.log("User exists, token updated.");
+                navigateTo('/Account');
             } else {
-                await setUserOauthToken(uid, result._tokenResponse.oauthAccessToken);
-                console.log("User does not exist, creating task.");
-                await createTask(uid, 0);
+                await setUserOauthToken(result.user.uid, result._tokenResponse.oauthAccessToken);
+                await createTask(result.user.uid, 0);
+                alert("Welcome!");
+                navigateTo('/tutorial');
             }
+            
         })
         .catch(error => {
             console.error(error)
