@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './Main.css'
 
 /*    image     */
@@ -6,7 +6,8 @@ import img_google from '../../assets/google.png';
 
 /*    User Auth     */
 import { UserAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+// import { getUserOauthToken } from '../../firestore/firebaseUser';
 
 function Main() {
   // eslint-disable-next-line no-control-regex
@@ -18,9 +19,7 @@ function Main() {
   const [isPasswordMatch, setIsPasswordMatch] = useState(true);
 
   // Google Signin
-  const { googleSignIn, user } = UserAuth();
-
-  const navigateTo = useNavigate();
+  const { googleSignIn } = UserAuth();
 
   const handleGoogleSignIn = async () => {
     try {
@@ -30,12 +29,6 @@ function Main() {
       alert(errMessage);
     }
   };
-
-  useEffect(() => {
-    if (user != null) {
-      navigateTo('/Account');
-    }
-  },[navigateTo, user])
 
   const handleChangeEmail = (e) => {
     const email = e.target.value;
