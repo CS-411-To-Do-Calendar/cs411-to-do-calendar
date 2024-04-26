@@ -1,0 +1,42 @@
+@import '../../App.css';
+
+.account-menu-container {
+    width: 15%;
+    max-height: 100vh;
+    padding-top: 3rem;
+    border-right: 1px black solid;
+}
+
+.account-menu-user-greet-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    .account-menu-user-greet-icon {
+        padding-left: .25rem;
+        padding-right: .25rem;
+    }
+    .account-menu-user-greet-text {}
+}
+
+.account-menu-control-container {
+    display: flex;
+    flex-direction: column;
+    .account-menu-control-child-container{
+        display: flex;
+        align-items: center;
+        padding:.25rem;
+        padding-left: 1rem;
+        margin-left: .25rem;
+        margin-right: .25rem;
+        border-radius: 4px;
+        .account-menu-control-child-icon {
+            padding-right: .25rem;
+        }
+    }
+    .account-menu-control-child-container:hover{
+        background-color: var(--lighten-inter-color-2);
+        color: var(--color-error);
+    }
+}
+
