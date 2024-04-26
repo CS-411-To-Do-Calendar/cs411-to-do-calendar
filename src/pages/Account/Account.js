@@ -180,6 +180,7 @@ const handleRemoveEvent = async (index, event) => {
   }
 };
 
+
 return (
     <div className='account-page-container'>
       {/* Left hand side */}

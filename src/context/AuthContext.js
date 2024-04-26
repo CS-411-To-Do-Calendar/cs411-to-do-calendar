@@ -9,6 +9,7 @@ import {
 import { auth } from '../firebase'
 import { userExist, setUserOauthToken, addUser } from '../firestore/firebaseUser.js'
 import { createTask } from "../firestore/firebaseTask.js";
+import { setTodo } from "../firestore/firebaseTodo.js";
 import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext();
 
@@ -35,6 +36,7 @@ export const AuthContextProvider = ({ children }) => {
             } else {
                 await setUserOauthToken(result.user.uid, result._tokenResponse.oauthAccessToken);
                 await createTask(result.user.uid, 0);
+                await setTodo(result.user.uid, []);
                 alert("Welcome!");
                 navigateTo('/tutorial');
             }
