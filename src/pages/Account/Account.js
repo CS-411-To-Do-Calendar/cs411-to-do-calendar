@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../../componets/spinner/spinner';
 // Firebase!
 import { UserAuth } from '../../context/AuthContext';
 
@@ -11,8 +12,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-// Img 
-import img_google from '../../assets/google.png';
+import Ada from '../ADA/ADA'
 
 // Icons
 import { RxCalendar } from "react-icons/rx";
@@ -33,11 +33,11 @@ function Account() {
   // It is importing AuthContext functions
   const { user, googleSignOut } = UserAuth();
   // Storin the calendar events
-  const [ calendarEvents, setCalendarEvents ] = useState([])
+  const [ calendarEvents, setCalendarEvents ] = useState([]);
   // Store Priority to do  today events
-  const [ todayTD, setTodayTD ] = useState([])
-  const [ tmrTD, setTmrTD ] = useState([])
-  const [ upcomingTD, setUpcomingTD ] = useState([])
+  const [ todayTD, setTodayTD ] = useState([]);
+  const [ tmrTD, setTmrTD ] = useState([]);
+  const [ upcomingTD, setUpcomingTD ] = useState([]);
 
 const [ totalUCTD, setTotalUCTD ] = useState(0);
 const [ doneTD, setDoneTD ] = useState(0);
@@ -196,7 +196,7 @@ return (
       {/* Left hand side */}
       <div className='account-menu-container'>
         <div className='account-menu-user-greet-container'>
-          <img src={img_google} alt='user-icon' className='account-menu-user-greet-icon'/>
+          <Spinner/>
           <div className='account-menu-user-greet-text'>Hello {user?.displayName},</div>
         </div>
         <div className='account-menu-control-container'>
@@ -293,6 +293,7 @@ return (
               </div>
             </div>
             <Progress completedEvents={doneTD} todayTodo={todayTD.length} upcomingTodo={totalUCTD} />
+            <Ada />
           </div>
         </div>
       </div>
