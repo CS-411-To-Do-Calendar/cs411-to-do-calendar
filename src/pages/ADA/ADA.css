@@ -3,7 +3,7 @@
 .chat-container {
     width: 100%;
     max-width: 360px;  /* Typical width for chat apps */
-    height: 60vh;  /* Adjusted for better visibility */
+    height: 40vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end; /* Aligns content to the bottom */
