@@ -1,19 +1,12 @@
-import React from 'react'
 import {
     collection,
     getDocs,
     addDoc,
-    deleteDoc,
     doc,
     getDoc,
-    query,
-    where,
-    onSnapshot,
-    updateDoc, 
     setDoc
 } from 'firebase/firestore';
 import { db } from '../firebase.js'
-import {auth} from '../firebase.js'
 const userCollectionRef = collection(db, "user")
 
 
@@ -40,14 +33,13 @@ export const userExist = async ( uid ) => {
 
 
 export const addUser = async (uid, oauthToken) => {
-    const docRef = await addDoc(userCollectionRef,
+    await addDoc(userCollectionRef,
         {
             "uid": uid,
             "OauthToken": oauthToken
         }
     );
 }
-
 
 export const setUserOauthToken = async (uid, oauthToken) => {
 
@@ -62,50 +54,9 @@ export const setUserOauthToken = async (uid, oauthToken) => {
     });
 }
 
-
-
-
-// export const setUserOauthToken = async (uid, oauthToken) => {
-//     try {
-//         // Check if oauthToken is defined
-//         if (oauthToken === undefined) {
-//             throw new Error('OAuth token is undefined');
-//         }
-
-//         const userDocRef = doc(db, 'user', uid); // Assuming 'user' is your collection name
-//         await setDoc(userDocRef, { uid, OauthToken: oauthToken }); // Set the document with the new OAuth token
-//         console.log('User OAuth token updated successfully');
-//     } catch (error) {
-//         console.error('Error setting user OAuth token:', error);
-//         throw error;
-//     }
-// };
-
-
 export const getUserOauthToken = async (uid) => {
     const userDocRef = doc(db, 'user', uid);
     const docSnap = await getDoc(userDocRef);
     const userData = docSnap.data();
-    const oauthAccessToken = userData.OauthToken; 
-    return oauthAccessToken; 
+    return await userData.OauthToken;
 }
-
-
-
-
-
-
-
-
-// export const addNewDeck = async (uid: String, titleInput: String) => {
-//     const docRef = await addDoc(decksCollectionRef, {
-//       author: doc(db, "/users/" + uid),
-//       title: titleInput,
-//       playlist: [],
-//       // bleedQueue: CardNode,
-//       // bleedQueueLength: 0
-//     }
-//     );
-//     console.log("Document written with ID: ", docRef.id);
-//     return docRef.id;
-// }

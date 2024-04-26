@@ -1,0 +1,134 @@
+@import '../../App.css';
+@import url(https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap);
+
+.tutorial-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Playfair Display', serif; /* A more decorative serif font */
+    background-color: bisque;
+}
+
+.tutorial-glare-effect {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    border-radius: 10px;
+    background: linear-gradient(105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.63) 45%,
+    rgba(255, 255, 255, 0.712) 50%,
+    transparent 54%);
+    filter: brightness(1.2) opacity(0.8);
+    mix-blend-mode: color-dodge;
+    background-size: 150% 150%;
+    background-position: 100%;
+}
+
+.tutorial-book-cover-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 65rem;
+    width: 80%;
+    height: 90vh;
+    position: relative;
+    background-color: rgb(101, 67, 33);
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.tutorial-book-outer-container {
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 90vh;
+    position: relative;
+    background-color: rgb(101, 67, 33);
+    border: 2px dashed rgb(255, 253, 208);
+}
+
+.tutorial-book-inner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+    position: absolute;
+    flex-wrap: wrap;
+}
+.tutorial-page-padding {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #110d0d; /* Deep brown color for the text */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.6), 2px 2px 4px rgba(0,0,0,0.2); /* Multiple shadows for depth */
+}
+
+.tutorial-book-page-left-container {
+    display: flex;
+    align-items: center;
+    width: 47.5%;
+    height: 85vh;
+    border: 2px solid black;
+    border-left: 5px double black;
+    background: radial-gradient(circle farthest-corner at 10% 20%, rgba(255, 248, 220, 0.9) 0%, rgba(255, 238, 210, 0.7) 20%, rgba(240, 224, 195, 0.5) 50%, rgba(205, 179, 128, 0.3) 75%, rgba(188, 166, 108, 0.2) 100%),
+                radial-gradient(circle at top left, rgba(238, 221, 130, 0.5) 0%, rgba(238, 221, 130, 0) 70%);
+}
+
+.tutorial-book-page-right-container {
+    width: 47.5%;
+    height: 85vh;
+    border: 2px solid black;
+    border-right: 5px double black;
+    background: radial-gradient(circle farthest-corner at 90% 20%, rgba(255, 248, 220, 0.9) 0%, rgba(255, 238, 210, 0.7) 20%, rgba(240, 224, 195, 0.5) 50%, rgba(205, 179, 128, 0.3) 75%, rgba(188, 166, 108, 0.2) 100%),
+                radial-gradient(circle at bottom right, rgba(238, 221, 130, 0.5) 0%, rgba(238, 221, 130, 0) 70%);
+}
+
+.tutorial-book-listing-container {
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    overflow-y: auto;
+    margin-bottom: 2rem;
+}
+
+.tutorial-book-listing-items {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    .tutorial-book-listing-icon {
+        width: 10%;
+        color: #110d0d; /* Matching the button color */
+    }
+    .tutorial-book-listing-description {
+        width: 90%;
+    }
+}
+
+.tutorial-book-button {
+    margin-top: 2rem;
+    font-size: 18px;
+    color: white;
+    background-color: #8a674e; /* Darker shade for contrast */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease;
+}
+
+.tutorial-book-button:hover {
+    background-color: #70543e; /* Slightly darker on hover */
+}
+

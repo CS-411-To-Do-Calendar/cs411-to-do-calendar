@@ -1,42 +1,49 @@
-import React from 'react'
 import { 
     collection, 
     getDocs, 
-    addDoc, 
-    deleteDoc, 
     doc, 
-    updateDoc, 
-    getDoc,
     query, 
-    where 
+    where, 
+    setDoc
 } from 'firebase/firestore';
 import { db } from '../firebase.js'
 
-const taskCollectionRef = collection(db, "task")
+const taskCollectionRef = collection(db, "task");
 
-export const addTaskData = async ( uid ) => {
-    // addDoc
+export const createTask = async (uid, done) => {
+    const taskDocRef = doc(db, 'task', uid);
+    try {
+        await setDoc(taskDocRef, {
+            uid: uid,
+            done: done
+        }, { merge: true });
+        console.log("Task created/updated for UID:", uid);
+    } catch (error) {
+        console.error("Failed to create/update task:", error);
+    }
 }
 
-export const getTaskData = async ( uid ) => {
-    // getDoc
+
+
+export const getDone = async (uid) => {
+    const q = query(taskCollectionRef, where('uid', '==', uid));
+    const querySnapshot = await getDocs(q);
+    let done;
+    querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        done = data.done;
+    });
+    return done;
 }
 
-export const setTaskData = async ( uid, todayTD, done, upcomingTD ) => {
-    // updateDoc
+
+export const setDone = async (uid, done) => 
+{
+    const taskDocRef = doc(db, 'task', uid);
+    await setDoc(taskDocRef,
+        {
+            "uid": uid,
+            "done" : done
+        } 
+    )
 }
-
-
-
-// export const addNewDeck = async (uid: String, titleInput: String) => {
-//     const docRef = await addDoc(decksCollectionRef, {
-//       author: doc(db, "/users/" + uid),
-//       title: titleInput,
-//       playlist: [],
-//       // bleedQueue: CardNode,
-//       // bleedQueueLength: 0
-//     }
-//     );
-//     console.log("Document written with ID: ", docRef.id);
-//     return docRef.id;
-// }
