@@ -1,0 +1,24 @@
+@import '../../../App.css';
+
+.organizer-container {
+    width: 50%;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    /* border-color: red;
+    border-style: solid; */
+
+}
+
+.organizer-header-container{
+    
+    .organizer-header-title {
+        /* border-style: solid;
+        border-color: green; */
+        font-size: var(--title-xl);
+        font-family: var(--ff-dm);
+        font-weight: bold;
+    }
+    
+}

@@ -1,0 +1,44 @@
+@import '../../App.css';
+
+.topic-container{
+    /* border-color: aqua;
+    border-style: solid; */
+
+}
+
+.topic-title-container{
+    background-color: var(--color-gray4);
+    width: fit-content;
+    margin-top: 20px;
+    padding: 5px 40px 5px 8px;
+    border-radius: 6px;
+
+    .topic-title{
+        /* border-color: palevioletred;
+        border-style: solid; */
+        font-size: var(--title-lg);
+        font-family: var(--ff-dm);
+        font-weight: bold;
+        
+    }
+}
+
+.topic-subtopic-container{
+    /* border-color: sandybrown;
+    border-style: solid; */
+
+    .topic-subtopic-item{
+        width: 405px;
+        height: 44px;
+        margin-left: 1rem;
+        margin-top: 1rem;
+        padding-left: 18px;
+        padding-top: 8px;
+        background-color: var(--color-gray4);
+        font-size: var(--txt-lg);
+        font-family: var(--ff-dm);
+        border-radius: 6px;
+        color: var(--color-white);
+
+    }
+}
