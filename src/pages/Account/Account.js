@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Spinner from '../../componets/spinner/spinner';
 // Firebase!
 import { UserAuth } from '../../context/AuthContext';
 
 // API reading
 import axios from 'axios';
+
+import Navbar from '../../componets/Navbar/Navbar';
 
 // Calendar imports
 import { Calendar, momentLocalizer } from 'react-big-calendar'
@@ -14,10 +14,6 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import Ada from '../ADA/ADA'
 
-// Icons
-import { RxCalendar } from "react-icons/rx";
-import { MdChecklistRtl } from "react-icons/md";
-import { LuUsers, LuSettings } from "react-icons/lu";
 
 // CSS
 import './Account.css';
@@ -26,7 +22,6 @@ import { getUserOauthToken } from '../../firestore/firebaseUser';
 import { getDone, setDone} from '../../firestore/firebaseTask';
 
 function Account() {
-  const navigate = useNavigate();
   const [ accessToken, setAccessToken ] = useState();
   const localizer = momentLocalizer(moment);
 
@@ -56,12 +51,14 @@ useEffect(() => {
   if (user && user.uid) {
     fetchToken();
   }
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [user]);
 
 useEffect(() => {
   if (accessToken) {
     handleReadEvents();
   }
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [accessToken]);
 
 useEffect(() => {
@@ -69,6 +66,7 @@ useEffect(() => {
     setTotalUCTD(tmrTD.length + upcomingTD.length);
     getComplete();
   }
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [calendarEvents]);
 
 // Reads the Events
@@ -194,31 +192,7 @@ const handleSignOut = async () => {
 return (
     <div className='account-page-container'>
       {/* Left hand side */}
-      <div className='account-menu-container'>
-        <div className='account-menu-user-greet-container'>
-          <Spinner/>
-          <div className='account-menu-user-greet-text'>Hello {user?.displayName},</div>
-        </div>
-        <div className='account-menu-control-container'>
-        <div className='account-menu-control-child-container' onClick={() => navigate('/account')}>
-            <RxCalendar className='account-menu-control-child-icon'/>
-            <div>Calendar</div>
-          </div>
-          <div className='account-menu-control-child-container' onClick={() => navigate('/todo')}>
-            <MdChecklistRtl className='account-menu-control-child-icon'/>
-            <div>To do List</div>
-          </div>
-          <div className='account-menu-control-child-container' onClick={() => navigate('/chatbot')}>
-            <LuUsers className='account-menu-control-child-icon'/>
-            <div>Ava (Prof Donham ref)</div>
-          </div>
-          <div className='account-menu-control-child-container' onClick={() => navigate('/setting')}>
-            <LuSettings className='account-menu-control-child-icon'/>
-            <div>Setting</div>
-          </div>
-        </div>
-      </div>
-
+      <Navbar />
       {/* Calendar view */}
       <div className='account-calendar-container'>
         <div className='account-calendar-horizonal-line'/>
