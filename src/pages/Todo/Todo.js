@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import { UserAuth } from '../../context/AuthContext';
 
 import './Todo.css'
+
 import Organizer from './Organizer/Organizer';
 import Navbar from '../../componets/Navbar/Navbar';
 import { getTodo, createTopic, createSubTopic } from '../../firestore/firebaseTodo';
@@ -55,36 +56,45 @@ function Todo() {
   return (
     <div className='todo-page-container'>
       <Navbar />
-      <div className='account-calendar-container'>
-        <div className='account-calendar-horizonal-line'/>
-        <div className='account-calendar-component-container'>
+      <div className='todo-container'>
+        <div className='todo-horizonal-line'/>
+        <div className='todo-component-container'>
+          <div className='organizer-component-container'>
           <Organizer todoArr={todoList} fetchTodoList={fetchTodoList}/>
+          </div>
           <div className='todo-adder-container'>
-            <div>
-                <div>Add Topic</div>
-                <input 
+            <div className='add-topic-container'>
+                <div className='add-topic-title'>Add Topic</div>
+                <div className='add-topic-content-container'>
+                  <input className='add-topic-input'
                   type="text"
                   value={topicName}
                   onChange={(e) => setTopicName(e.target.value)}
                   placeholder="Enter topic name"
-                /> 
-                <button onClick={handleAddTopic}>Add Topic</button>
+                  /> 
+                  <button className="add-topic-button" onClick={handleAddTopic}>Add Topic</button>
+                </div>
             </div>
-            <div>
-              <div>Add Sub Topic</div>
-              <input 
+            <div className='add-subtopic-container'>
+            
+              <div className='add-subtopic-title'>Add Sub Topic</div>
+              <div className='add-subtopic-content-container'>
+              <input  className='add-subtopic-input'
                 type="text"
                 value={selectedTopic}
                 onChange={(e) => setSelectedTopic(e.target.value)}
                 placeholder="Enter existing topic name"
               /> 
-              <input 
+              <button className="add-subtopic-button" onClick={handleAddSubTopic}>Add Sub Topic</button>
+              </div>
+              <div className='add-subtopic-name-container'>
+              <input className='add-subtopic-input'
                 type="text"
                 value={subTopicName}
                 onChange={(e) => setSubTopicName(e.target.value)}
                 placeholder="Enter subtopic name"
               />
-              <button onClick={handleAddSubTopic}>Add Sub Topic</button>
+              </div>
             </div>
           </div>
         </div>

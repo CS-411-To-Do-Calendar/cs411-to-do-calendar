@@ -1,9 +1,136 @@
 @import '../../App.css';
 
+
+
+
+
+
+
+.todo-container {
+    width: 85%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: -6rem;
+    .todo-horizonal-line{
+        padding-top: 5rem;
+        border-bottom: solid 1px black;
+    }
+    
+    .todo-component-container{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 100%;
+        /* border-radius: 6px;
+        border-color: var(--color-gray4);
+        border-style: solid; */
+    }
+}
+
+.organizer-component-container{
+    border-radius: 6px;
+    width: 50%;
+    border-style: solid;
+    border-color: var(--color-gray4);
+    margin: 20px;
+}
+
 .todo-page-container {
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
+}
+
+.todo-adder-container{
+    border-style: solid;
+    border-color: var(--color-gray4);
+    width: 30%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    border-radius: 6px;
+}
+
+.add-topic-container{
+    display: flex;
+    border-radius: 6px;
+    border-color: var(--color-gray4);
+    border-style: solid;
+    height: fit-content;
+    flex-direction: column;
+    margin: 20px;
+    padding: 16px;
+    
+    .add-topic-title{
+        font-family: var(--ff-dm);
+        font-weight: bold;
+        font-size: var(--title-sm);
+        padding-bottom: 16px;
+    }
+}
+
+.add-topic-content-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .add-topic-input{
+        width: 40%;
+        height: 32px;
+    }
+
+    .add-topic-button{
+        font-family: var(--ff-dm);
+        font-size: var(--title-xs);
+        padding: 0 8px;
+    }
+}
+
+.add-subtopic-container{
+    display: flex;
+    border-radius: 6px;
+    border-color: var(--color-gray4);
+    border-style: solid;
+    height: fit-content;
+    flex-direction: column;
+    margin: 20px;
+    padding: 16px;
+
+    .add-subtopic-title{
+        font-family: var(--ff-dm);
+        font-weight: bold;
+        font-size: var(--title-sm);
+        padding-bottom: 16px;
+    }
+}
+
+.add-subtopic-content-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 16px;
+
+    .add-subtopic-input{
+        width: 40%;
+        height: 32px;
+    }
+
+    .add-subtopic-button{
+        font-family: var(--ff-dm);
+        font-size: var(--title-xs);
+        padding: 0 8px;
+    }
+}
+
+.add-subtopic-name-container{
+    display: flex;
+
+    .add-subtopic-input{
+        width: 100%;
+        height: 32px;
+    }
 }
