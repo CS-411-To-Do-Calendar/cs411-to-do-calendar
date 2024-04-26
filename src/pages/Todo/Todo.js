@@ -10,7 +10,13 @@ function Todo() {
     // <div>Todo</div>
     <div className='todo-page-container'>
       <Navbar />
-      <Organizer />
+      <div className='account-calendar-container'>
+        <div className='account-calendar-horizonal-line'/>
+        <div className='account-calendar-component-container'>
+          <Organizer />
+          
+        </div>
+      </div>
     </div>
   )
 }
