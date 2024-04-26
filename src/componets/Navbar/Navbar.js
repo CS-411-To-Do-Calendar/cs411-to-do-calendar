@@ -46,7 +46,7 @@ function Navbar() {
             <div className='account-menu-control-child-container' onClick={() => navigate('/todo')}>
                 <LuSettings className='account-menu-control-child-icon'/>
                 {user?.displayName ? (
-                <div onClick={handleSignOut}>Logout!</div>
+                <div className="" onClick={handleSignOut}>Logout!</div>
                 ) : (
                     <a href='/'>Log In</a>
                 )}

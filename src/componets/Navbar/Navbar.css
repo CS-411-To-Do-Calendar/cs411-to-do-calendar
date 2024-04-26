@@ -22,22 +22,22 @@
 .account-menu-control-container {
     display: flex;
     flex-direction: column;
-    .account-menu-control-child-container{
-        display: flex;
-        align-items: center;
-        padding:.25rem;
-        padding-left: 1rem;
-        margin-left: .25rem;
-        margin-right: .25rem;
-        border-radius: 4px;
-        .account-menu-control-child-icon {
-            padding-right: .25rem;
-        }
+}
+.account-menu-control-child-container{
+    display: flex;
+    align-items: center;
+    padding:.25rem;
+    padding-left: 1rem;
+    margin-left: .25rem;
+    margin-right: .25rem;
+    border-radius: 4px;
+    .account-menu-control-child-icon {
+        padding-right: .25rem;
     }
-    .account-menu-control-child-container:hover{
-        background-color: var(--lighten-inter-color-2);
-        color: var(--color-error);
-    }
+}
+.account-menu-control-child-container:hover{
+    background-color: var(--lighten-inter-color-2);
+    color: var(--color-error);
 }
 
 .account-menu-space-between {
