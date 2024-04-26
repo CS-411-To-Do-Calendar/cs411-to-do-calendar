@@ -26,7 +26,7 @@ function Account() {
   const localizer = momentLocalizer(moment);
 
   // It is importing AuthContext functions
-  const { user, googleSignOut } = UserAuth();
+  const { user } = UserAuth();
   // Storin the calendar events
   const [ calendarEvents, setCalendarEvents ] = useState([]);
   // Store Priority to do  today events
@@ -180,15 +180,6 @@ const handleRemoveEvent = async (index, event) => {
   }
 };
 
-// Handles Sign out on click. (This part is complete)
-const handleSignOut = async () => {
-  try {
-    await googleSignOut();
-  } catch (error) {
-    console.error('Sign out error', error);
-  }
-};
-
 return (
     <div className='account-page-container'>
       {/* Left hand side */}
@@ -209,12 +200,6 @@ return (
             />
           </div>
           <div className='account-widget-container'>
-            {/* <button onClick={handleReadEvents}>Read Events</button> */}
-            {user?.displayName ? (
-                <div onClick={handleSignOut}>Logout!</div>
-            ) : (
-                <a href='/'>Log In</a>
-            )}
             {/* This code is for the priority to do list on the righthand side of the screen
             This works by having individual containers for each type of event: today, tomorrow, and upcoming.
             We put a checkbox next to each event in the case that we have removed it*/}
