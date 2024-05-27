@@ -83,5 +83,5 @@ Takes two numbers and returns the sum.
 
 ## Authors
 
-- [@octokatherine](https://www.github.com/octokatherine)
+![Kim](https://github.com/SPC-Toad)
 
